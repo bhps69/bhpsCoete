@@ -81,7 +81,7 @@ define('SECURE_AUTH_SALT', 'B1dL*7UmY6*qx1R9J<I<J$wd&f+AUGO)A%?!hVhD$aNDUpJI+L/)
 define('LOGGED_IN_SALT',   '_sWr;4!WRT!+?9V^sAH|9JX[r-k!xlmVFS7x0-,U-B9KZ55c&J/dRLV1VF*V&{>n');
 define('NONCE_SALT',       'm>RW+&[/X<F&|4kW#x~SRVJF3qa;H8hTZa4`(ss`c9,_kE)9+i>elMJl(LwK?|H3');
 
-/**#@-*/
+/*#@-*/
 
 /**
  * WordPress Database Table prefix.
