@@ -28,34 +28,27 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $db_user = 'root';
     $db_pass = '';
     $db_host = 'localhost';
-} else if ($_SERVER['HTTP_HOST'] == 'coete-dev.9wuev8nq63.us-east-1.elasticbeanstalk.com' || 
-$_SERVER['HTTP_HOST'] == 'dev.coete.co') {
-    $db_name = 'coete_dev_db';
-    $db_user = 'coete_dev_db';
-    $db_pass = 'coete-dev-db';
-    $db_host = 'coete-dev-db.cizykhfl5mwn.us-east-1.rds.amazonaws.com';
-} else if ($_SERVER['HTTP_HOST'] == 'coete-prod.9wuev8nq63.us-east-1.elasticbeanstalk.com' || 
-$_SERVER['HTTP_HOST'] == 'www.coete.co') {
-	$db_name = 'coete_prod';
-    $db_user = 'coete_dev_db';
-    $db_pass = 'coete-dev-db';
-    $db_host = 'coete-dev-db.cizykhfl5mwn.us-east-1.rds.amazonaws.com';
-
+} else
+{
+	$db_name='adityars_wp_phanicoete';
+	$db_user = 'adityars_phanico';
+	$db_pass='PhaniCo';
+	$db_host='localhost';
 }
 
 
 
-define('DB_NAME', 'coete');
+define('DB_NAME', $db_name);
 
 /** MySQL database username */
-define('DB_USER', 'root');
+define('DB_USER', $db_user);
 
 
 /** MySQL database password */
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', $db_pass);
 
 /** MySQL hostname */
-define('DB_HOST', 'localhost');
+define('DB_HOST', $db_host);
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8mb4');
