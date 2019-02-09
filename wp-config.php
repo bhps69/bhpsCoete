@@ -33,7 +33,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 	$db_name='adityars_wp_phanicoete';
 	$db_user = 'adityars_phanico';
 	$db_pass='PhaniCo';
-	$db_host='localhost';
+	$db_host='training.gkblabs.com';
 }
 
 
