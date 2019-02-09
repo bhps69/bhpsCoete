@@ -24,7 +24,7 @@
 //phpinfo();
 
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
-    $db_name = 'coiet';
+    $db_name = 'coete';
     $db_user = 'root';
     $db_pass = '';
     $db_host = 'localhost';
