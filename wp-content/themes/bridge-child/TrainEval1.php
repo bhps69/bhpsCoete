@@ -22,7 +22,23 @@ add_action('wp_enqueue_scripts', 'shapeSpace_include_custom_jquery');?>
 <html>
 <head>
 <script>
+
+	window.onload=function(e){
+		<?php 
+global $wpdb;
+//populate city dropdown
+$query = "SELECT DISTINCT meta_value FROM `wp_usermeta` where meta_key='mepr_city' ORDER BY meta_value";
+$cities = $wpdb->get_results( $query );
+
+//populate state dropdown
+$query1="SELECT DISTINCT meta_value FROM wp_usermeta WHERE meta_key = 'mepr_state_province' ORDER BY meta_value";
+$states=$wpdb->get_results($query1);
+//populate country dropdown
+$query2="SELECT DISTINCT meta_value FROM wp_usermeta WHERE meta_key = 'mepr_country' ORDER BY meta_value";
+$country=$wpdb->get_results($query2);
+	?>}
 	function clickMe(e){
+		
 		var frm = document.getElementById('cityForm');
 		frm.submit();
 	    
@@ -63,13 +79,13 @@ add_action('wp_enqueue_scripts', 'shapeSpace_include_custom_jquery');?>
 		  <th>Name</th>
 		  <th>id</th>
 		  <th>email</th>
-		  <th><form action="#" method="POST" name="cityForm" id="cityForm"><select name="city" id='city_name' style="{border: 0px;outline:0px;-webkit-border-radius:0px}"  onchange="clickMe(this.value)"><option selected="selected" value="%">City</option><option value="All">All</option><option value="Hyderabad">Hyderabad</option><option value="Florida">Florida</option><option value="Mount Vernon">Mount Vernon</option><option value="Seattle">Seattle</option><option value="East Rutherford">East Rutherford</option></select> </form></th>
+		  <th><form action="#" method="POST" name="cityForm" id="cityForm"><select name="city" id='city_name' style="{border: 0px;outline:0px;-webkit-border-radius:0px}"  onchange="clickMe(this.value)"><option selected="selected" value="%">City</option><option value="All">All</option><?php foreach($cities as $city){echo "<option value='".$city->meta_value."'>".$city->meta_value."</option>";}?></select> </form></th>
 		  
-		  <th><form action="#" method="POST" name="stateForm" id="stateForm"><select name="state" style="{border: 0px;outline:0px;-webkit-border-radius:0px}" onchange="clickMe1(this.value)"><option value="%" selected="selected">State</option><option value="All">All</option><option value="IOWA">iowa</option><option value="washington">washington</option><option value="Alabama">alabama</option><option value="Idaho">Idaho</option><option value='arizona'>arizona</option><option value='conecticut'>connecticut</option></select></form>
+		  <th><form action="#" method="POST" name="stateForm" id="stateForm"><select name="state" style="{border: 0px;outline:0px;-webkit-border-radius:0px}" onchange="clickMe1(this.value)"><option value="%" selected="selected">State</option><option value="All">All</option><?php foreach($states as $state){echo "<option value='".$state->meta_value."'>".$state->meta_value."</option>";}?></select></form>
 		  
 		  </th>
 		  
-          <th><form action="#" method="POST" name="countryForm" id="countryForm"><select name="country" style="{border: 0px;outline:0px;-webkit-border-radius:0px}" onchange="clickMe2(this.value)"><option selected="selected" value="%">Country</option><option value="All">All</option><option value="usa">usa</option><option value="India">India</option><option value="bangladesh">bangladesh</option><option value="china">china</option></select>
+          <th><form action="#" method="POST" name="countryForm" id="countryForm"><select name="country" style="{border: 0px;outline:0px;-webkit-border-radius:0px}" onchange="clickMe2(this.value)"><option selected="selected" value="%">Country</option><option value="All">All</option><?php foreach($countries as $country){echo "<option value='".$country->meta_value."'>".$country->meta_value."</option>";}?></select>
 		  </form>
 		  </th>
 		  
