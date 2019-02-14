@@ -125,10 +125,7 @@ $country=$wpdb->get_results($query2);
 							)
 						)
 					);
-				}
-
-
-					$users = get_users( $args );		
+				}users = get_users( $args );		
 
 				return $users;
 			}
