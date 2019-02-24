@@ -35,11 +35,11 @@
 				
 				$q = "INSERT INTO imageupload (image_name,image_path,image_desc,image_width,image_height,image_type,image_mem_size) VALUES('".$fileName[0]."', '".$path.'/'.$bas."' ,'".$desc."', ".$size[0].", ".$size[1].", '".$mime[1]."', ".$mem.")";
 				$result=$con->query($q);
-		/* 		if($result)
+		 		/* if($result)
 					echo "record is inserted..";
 				else
-					echo "not inserted";
- */			} 
+					echo "not inserted"; */
+			} 
 			
 
 		

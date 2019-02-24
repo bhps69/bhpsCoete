@@ -26,32 +26,47 @@ wp_register_script('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/
 	wp_enqueue_script('bootstrap');
 function upload(){
 	echo "<h1>Welcome To My Plugin</h1><br/<br/>";
-/* 	$con= mysqli_connect('localhost','root','','coete');
-	$query= "select * from imageplugin";
-	$result = mysqli_query($con, $query);
-	echo "result :";
-	print_r($_result);
-	if(empty($result)){
-		$create = "CREATE TABLE imageupload(id INT(6) AUTO_INCREMENT PRIMARY KEY, image_name VARCHAR(30) NOT NULL, 	 image_path VARCHAR(50) NOT NULL, image_desc VARCHAR(100) NOT NULL,image_width INT(6) NOT NULL,image_height INT(6) NOT NULL,image_type VARCHAR(5) NOT NULL,image_mem INT(6) NOT NULL)";
-		$result = mysqli_query($con, $create);
-		if($result)
-			echo "table created successfully";
-		else
-		
-			echo "error".mysqli_error;
-			}
-	else
-	{
-		if ($result->num_rows > 0) {
+ 	$con= mysqli_connect('localhost','root','','coete');
+	$query= 'select 1 from `imageupload` LIMIT 1';
+	$result = mysqli_query($con, $query) ;
+	if($result!=FALSE){
+		echo "in if";
+		$rows="select * from `imageupload`";
+		$result = mysqli_query($con,$rows);
+		print_r($result);
+		if (count($result)>0) {
 			echo "in if";
+			
 			while($row = $result->fetch_assoc())
 			{
-				echo "<table><tr><th>".$row['id']."</th><td>'".$row['image_name']."'</td></tr><tr><td><img src='".$row['image_path'].$row['file_name'].".gif'</td></tr><tr><td>'".$row['image_desc']."'</td></tr></table>";
+				$filePath=$row['image_path'];
+				$path=explode("/",$filePath);
+				echo $path[0]."/".$row['image_name'];
+//				echo "path :".substr($filePath,0,strlen($filePath));	
+			
+				echo "<table><tr><th>".$row['id']."</th><td>'".$row['image_name']."'</td></tr><tr><td><img src='".$row['image_path'].$row['image_name']."gif'</td></tr><tr><td>'".$row['image_desc']."'</td></tr></table>";
 				
 			}
 		}
+
+
 	}
- */	}
+	else
+	{
+		echo"in else";
+			$create = "CREATE TABLE imageupload(id INT(6) AUTO_INCREMENT PRIMARY KEY, image_name VARCHAR(30) NOT NULL, 	 image_path VARCHAR(50) NOT NULL, image_desc VARCHAR(100) NOT NULL,image_width INT(6) NOT NULL,image_height INT(6) NOT NULL,image_type VARCHAR(5) NOT NULL,image_mem INT(6) NOT NULL)";
+		$createResult = mysqli_query($con, $create);
+		if($createResult)
+		{
+			echo "table created successfully";
+			mkdir("/xampp/htdocs/coete/wp-content/plugins/ImageUpload-Plugins/UploadedImages");
+		}
+		else
+		
+			echo "error".mysqli_error;
+
+	}
+ 	}
 function uploadImage(){
     $html="<html><head>
     
