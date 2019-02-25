@@ -44,7 +44,7 @@ function upload(){
 				echo $path[0]."/".$row['image_name'];
 //				echo "path :".substr($filePath,0,strlen($filePath));	
 			
-				echo "<table><tr><th>".$row['id']."</th><td>'".$row['image_name']."'</td></tr><tr><td><img src='".$row['image_path'].$row['image_name']."gif'</td></tr><tr><td>'".$row['image_desc']."'</td></tr></table>";
+				echo "<table><tr><th>".$row['id']."</th></tr><tr><th>'".$row['image_name']."'</th></tr><tr><td><img src='http://localhost/coete/wp-content/plugins/ImageUpload-Plugins/UploadedImages/".$row['image_name'].".gif' width='100' height='100'></td></tr><tr><td>'".$row['image_desc']."'</td></tr></table>";
 				
 			}
 		}
