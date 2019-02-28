@@ -41,7 +41,7 @@ echo "returned table".$wpdb->get_var("SHOW TABLES LIKE '$table_name'");
 //		echo "in if";
 		$rows="select * from `imageupload`";
 		$result = $wpdb->get_results($rows,ARRAY_A);
-		print_r($result);
+//		print_r($result);
 	
 		
 		if (count($result)>0) {
@@ -52,10 +52,16 @@ echo "returned table".$wpdb->get_var("SHOW TABLES LIKE '$table_name'");
 				$filePath=$row[1];
 				//echo "filepath :".$row;
 				$path=explode("/",$filePath);
-				//echo $path[0]."/".$row['image_name'];
+//				echo $row['image_path']."<br>";
+//				echo $row['image_path']."/".$row['image_name'];
 //				echo "path :".substr($filePath,0,strlen($filePath));	
-				
-				echo "<th>".$row['id']."<br/>'".$row['image_name']."'<br/><img src=".$path['url'].'/'.$row['image_name'].".gif' width='100' height='100'><br/>'".$row['image_desc']."'</th>";
+				$imagePath= $row['image_path'];
+				$imgName=$row['image_name'];
+				$imgPathName= $imagePath.$imgName;
+				$expath=str_replace('"','/',$imgPathName);
+				$exgif= $expath.".gif";
+				echo $exgif."<br>";
+				echo "<th>".$row['id']."<br/>'".$row['image_name']."'<br/><img src='".$exgif."' width='100' height='100'><br/>'".$row['image_desc']."'</th>";
 			
 			}
 			echo "</tr></table>";
@@ -85,10 +91,10 @@ function uploadImage(){
 <div class='container-fluid'>
 	<div id='leftPanel' align='left' class='col-sm-6 col-md-6 col-lg-6'>
 		<div class='align-middle;'>
-<form id='form' method='post' enctype='multipart/form-data'>
+<form id='form' method='post' action='".dirname(__DIR__)."\imgRead.php' enctype='multipart/form-data'>
             <div class='col-sm-12 form-group mt-20'>
                 <label for='imgUpload'>Image</label>
-                <input type='file' name='imgUpload' id='imgUpload' />
+                <input type='file' name='imgUpload' id='imgUpload'/>
             </div>
             <div class='col-sm-12 form-group mt-20'>
                 <label for='imgDesc'>Description</label><br>
