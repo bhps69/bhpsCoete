@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
             console.log(formData);
                 jQuery.ajax({
                     type: "POST",     
-                    url: "http://localhost/coete/wp-content/plugins/ImageUpload-Plugins/imgRead.php",
+                    url: "imgRead.php",
                     data: formData,
                     cache:false,
                     contentType: false,

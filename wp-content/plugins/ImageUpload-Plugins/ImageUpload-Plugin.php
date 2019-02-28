@@ -18,48 +18,61 @@ function imageUpload_plugin_setup_menu(){
 }
 
 wp_enqueue_script('jquery');
-wp_register_script( 'upload', 'http://localhost/coete/wp-content/plugins/ImageUpload-Plugins/js/Upload.js');
+wp_register_script( 'upload', plugins_url().'/ImageUpload-Plugins/js/Upload.js');
     wp_enqueue_script( 'upload' );
-wp_register_script('bootstrapCss','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css');
-wp_register_script('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js');    
-	wp_enqueue_script('bootstrapCss');
-	wp_enqueue_script('bootstrap');
+//wp_register_script('bootstrapCss','https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css');
+//wp_register_script('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js');    
+//	wp_enqueue_script('bootstrapCss');
+//	wp_enqueue_script('bootstrap');
+global $wpdb;
+$charset_collate = $wpdb->get_charset_collate();
+require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 function upload(){
-	echo "<h1>Welcome To My Plugin</h1><br/<br/>";
- 	$con= mysqli_connect('localhost','root','','coete');
-	$query= 'select 1 from `imageupload` LIMIT 1';
-	$result = mysqli_query($con, $query) ;
-	if($result!=FALSE){
-		echo "in if";
+	global $wpdb;
+	$path=wp_upload_dir();
+//	echo "<h1>Welcome To My Plugin</h1><br/<br/>";
+// 	$con= mysqli_connect('localhost','root','','coete');
+$table_name = 'imageupload';
+//	echo "table name".$table_name;
+	$query= 'SHOW TABLES LIKE '.$table_name.'';
+//	$result = mysqli_query($con, $query) ;
+echo "returned table".$wpdb->get_var("SHOW TABLES LIKE '$table_name'");
+	if(($wpdb->get_var("SHOW TABLES LIKE '$table_name'")) != ""){
+//		echo "in if";
 		$rows="select * from `imageupload`";
-		$result = mysqli_query($con,$rows);
+		$result = $wpdb->get_results($rows,ARRAY_A);
 		print_r($result);
+	
+		
 		if (count($result)>0) {
-			echo "in if";
 			
-			while($row = $result->fetch_assoc())
-			{
-				$filePath=$row['image_path'];
+			echo "<table><tr>";
+			for($i=0;$i<count($result);$i++){
+				$row=($result[$i]);
+				$filePath=$row[1];
+				//echo "filepath :".$row;
 				$path=explode("/",$filePath);
-				echo $path[0]."/".$row['image_name'];
+				//echo $path[0]."/".$row['image_name'];
 //				echo "path :".substr($filePath,0,strlen($filePath));	
-			
-				echo "<table><tr><th>".$row['id']."</th></tr><tr><th>'".$row['image_name']."'</th></tr><tr><td><img src='http://localhost/coete/wp-content/plugins/ImageUpload-Plugins/UploadedImages/".$row['image_name'].".gif' width='100' height='100'></td></tr><tr><td>'".$row['image_desc']."'</td></tr></table>";
 				
+				echo "<th>".$row['id']."<br/>'".$row['image_name']."'<br/><img src=".$path['url'].'/'.$row['image_name'].".gif' width='100' height='100'><br/>'".$row['image_desc']."'</th>";
+			
 			}
+			echo "</tr></table>";
 		}
 
 
 	}
 	else
 	{
-		echo"in else";
+		echo "in else";
 			$create = "CREATE TABLE imageupload(id INT(6) AUTO_INCREMENT PRIMARY KEY, image_name VARCHAR(30) NOT NULL, 	 image_path VARCHAR(50) NOT NULL, image_desc VARCHAR(100) NOT NULL,image_width INT(6) NOT NULL,image_height INT(6) NOT NULL,image_type VARCHAR(5) NOT NULL,image_mem INT(6) NOT NULL)";
-		$createResult = mysqli_query($con, $create);
-		if($createResult)
+		$createResult=dbDelta($create);
+		
+		if(!empty($createResult))
 		{
-			echo "table created successfully";
-			mkdir("/xampp/htdocs/coete/wp-content/plugins/ImageUpload-Plugins/UploadedImages");
+			echo "table created successfully<br/>";
+		
 		}
 		else
 		
@@ -68,50 +81,33 @@ function upload(){
 	}
  	}
 function uploadImage(){
-    $html="<html><head>
-    
-    </head><body>
+    $html="
 <div class='container-fluid'>
-	<div id='leftPanel' align='left' class='col-sm-6 col-md-6'>
+	<div id='leftPanel' align='left' class='col-sm-6 col-md-6 col-lg-6'>
 		<div class='align-middle;'>
-        <form id='form' method='post' enctype='multipart/form-data'> 
-        
-		
-			<div class='row'>
-        		<div class='col-md-6'>
-                    <center><label for='imgUpload'>Image</label></center>
-				</div>        
-				<div class='col-md-6'>
-                    <input type='file' name='imgUpload' id='imgUpload'>
-				</div>
-       		</div>
-			<div class='row'>
-				<div class='col-md-6'>
-                    <center><label for='imgDesc'>Description</label></center>
-				</div>
-        		<div class='col-md-6'>
-                    <input type='text' id='imgDesc' name='imgDesc'>
-				</div>
-			</div>
-			<div class='row'>
-				<div class='col-md-6'>
-                    <center><input type='submit' value='submit' name='submit' id='submit'></center>
-				</div>
-				<div class='col-md-6'>
-                    <input type='reset' id='reset'/>
-				</div> 
-			</div>
-		</form>
+<form id='form' method='post' enctype='multipart/form-data'>
+            <div class='col-sm-12 form-group mt-20'>
+                <label for='imgUpload'>Image</label>
+                <input type='file' name='imgUpload' id='imgUpload' />
+            </div>
+            <div class='col-sm-12 form-group mt-20'>
+                <label for='imgDesc'>Description</label><br>
+		<input type='text' id='imgDesc' name='imgDesc'/>
+            </div>
+            <div class='col-sm-12 form-group mt-20'>
+                <input type='submit' value='submit' name='submit' id='submit' style='background-color: blue;width:100px;color: white;'/>
+                <input type='reset' id='reset' style='background-color: blue;width:100px;color: white;'/></td>
+            </div>
+        </form>
 		</div>
      </div>
 		
-    <div id='rightPanel' align='right' class='col-sm-6 col-md-6'>
+    <div id='rightPanel' align='right' class='col-sm-6 col-md-6 col-lg-6'>
 		<div id='rightPanel-div' class='align-top;'>
 		</div>
     </div>
 </div>
-</body>
-</html>
+
 ";
 return $html;
 }
