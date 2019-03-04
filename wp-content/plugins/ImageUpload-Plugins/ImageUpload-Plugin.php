@@ -18,7 +18,11 @@ function imageUpload_plugin_setup_menu(){
 }
 
 wp_enqueue_script('jquery');
+wp_enqueue_script('jquery-form');
+wp_enqueue_script('jquery-ui-progressbar');
 wp_register_script( 'upload', plugins_url().'/ImageUpload-Plugins/js/Upload.js');
+wp_register_script( 'upload1', plugins_url().'/ImageUpload-Plugins/js/Upload1.js');
+wp_enqueue_script('upload1');
     wp_enqueue_script( 'upload' );
 //wp_register_script('bootstrapCss','https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css');
 //wp_register_script('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js');    
@@ -92,19 +96,38 @@ function uploadImage(){
 	<div id='leftPanel' align='left' class='col-sm-6 col-md-6 col-lg-6'>
 		<div class='align-middle;'>
 <form id='form' method='post' action='".dirname(__DIR__)."\imgRead.php' enctype='multipart/form-data'>
-            <div class='col-sm-12 form-group mt-20'>
+	<div class='row'>
+            <div class='col-sm-6 col-md-6 col-lg-6 form-group '>
+			
                 <label for='imgUpload'>Image</label>
+			</div>
+			<div class='col-sm-6 col-md-6 col-lg-6 form-group '>
                 <input type='file' name='imgUpload' id='imgUpload'/>
             </div>
-            <div class='col-sm-12 form-group mt-20'>
+		</div>
+		<div class='row'>
+		
+        <div class='col-sm-6 col-md-6 col-lg-6 form-group '>
                 <label for='imgDesc'>Description</label><br>
+			</div>
+			<div class='col-sm-6 col-md-6 col-lg-6 form-group '>
 		<input type='text' id='imgDesc' name='imgDesc'/>
             </div>
-            <div class='col-sm-12 form-group mt-20'>
+		</div>
+		<div class='row'>
+            <div class='col-sm-6 col-md-6 col-lg-6 form-group '>
                 <input type='submit' value='submit' name='submit' id='submit' style='background-color: blue;width:100px;color: white;'/>
+			</div>
+			<div class='col-sm-6 col-md-6 col-lg-6 form-group '>
                 <input type='reset' id='reset' style='background-color: blue;width:100px;color: white;'/></td>
             </div>
+		</div>
+		<div class='progress'>
+			<div class='progress-bar' role='progressbar' aria-valuenow='0' ariavaluemin='0' aria-valuemax='100'></div>
+		</div>
+		<div id='targetLayer' style='display:none'></div>
         </form>
+		<div id='loader-icon' style='display:none'><img src='businessProcesses1.jpg'/></div>
 		</div>
      </div>
 		

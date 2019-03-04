@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
       jQuery('#form').on('submit',function(e) {
                         
             e.preventDefault();
+			
             var formData = new FormData(this);
 			var getUrl = window.location;
 			alert(getUrl.pathname.split('/')[1]);

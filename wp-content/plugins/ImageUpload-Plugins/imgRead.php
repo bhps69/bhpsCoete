@@ -17,7 +17,10 @@ include "../../../wp-load.php";
 
 		//$location = $path.$bas;
 		//$img = file_get_contents($base);
-		move_uploaded_file($bas,$path['url']);
+		if(move_uploaded_file($bas,$path['url']))
+		{
+			echo "<img src='".$path['url']."/".$bas."' class='img-thumbnail' width='300' height='250'/>";
+		}
 		$size = getimagesize($base);
 		$mime=explode("/",$size['mime']);
 	echo $mime[1];
@@ -36,7 +39,7 @@ include "../../../wp-load.php";
 				
 				$table_name='imageupload';
 				$q = "INSERT INTO imageupload (image_name,image_path,image_desc,image_width,image_height,image_type,image_mem) VALUES('".$fileName[0]."', '".$path['url'].'"/"'.$bas."' ,'".$desc."', ".$size[0].", ".$size[1].", '".$mime[1]."', ".$mem.")";
-//				echo $q;
+				echo $q;
 				$wpdb->query($q);
 			//	$result=$wpdb->insert($table_name, array('image_name'=>$fileName[0],'image_path'=>$path['url'].'/'.$bas,'image_desc'=>$desc,'image_width'=>$size[0],'image_height'=>size[1],'image_type'=>$mime[1],'image_mem'=>$mem));
 //				echo $wpdb->print_error();
